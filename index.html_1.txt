@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Приглашение на никах</title>
+  <style>
+    :root {
+      --bg-color: #f5f0e6; /* тёплый светлый фон */
+      --accent-color: #a88b6e; /* «башкирский» акцент: тёплый коричневый/бежевый */
+      --text-color: #333;
+      --white: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Главный экран */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('images/bg-pattern.jpg') no-repeat center/cover;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin: 0 0 10px 0;
+      color: var(--accent-color);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 500px;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 6px;
+    }
+    .btn:hover { background: #8c7358; }
+
+    /* Галерея с движением фото */
+    .gallery-container {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .photo-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 400px; /* фиксированная высота для плавности */
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      background: #eee;
+    }
+
+    .photos-track {
+      display: flex;
+      width: max-content;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .photo-item {
+      min-width: 100%; /* на мобильных — по одному фото на экран */
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Кнопки навигации */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: var(--white);
+      color: var(--accent-color);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .nav-btn:hover { background: var(--accent-color); color: white; }
+
+    /* Текст приглашения */
+    .invitation-text {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+
+    .invitation-text h2 {
+      color: var(--accent-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Адаптив */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.6rem; }
+      .photo-wrapper { height: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Главный экран -->
+  <section class="hero">
+    <h1>Приглашаем на никах!</h1>
+    <p>По башкирской традиции — с теплом, уважением и добрыми пожеланиями.</p>
+    <button class="btn" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">Смотреть фото</button>
+  </section>
+
+  <!-- Галерея с возможностью двигать фото -->
+  <section id="gallery" class="gallery-container">
+    <div class="photo-wrapper">
+      <div class="photos-track" id="track">
+        <img src="images/photo1.jpg" alt="Фото 1" class="photo-item">
+        <img src="images/photo2.jpg" alt="Фото 2" class="photo-item">
+        <img src="images/photo3.jpg" alt="Фото 3" class="photo-item">
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn" id="prevBtn" onclick="move(-1)">←</button>
+      <button class="nav-btn" id="nextBtn" onclick="move(1)">→</button>
+    </div>
+  </section>
+
+  <!-- Текст приглашения -->
+  <section class="invitation-text">
+    <h2>Дорогие гости!</h2>
+    <p>Приглашаем вас разделить с нами радость этого светлого дня — дня никаха. По башкирской традиции мы хотим окружить этот момент теплом, уважением к старшим и единением семьи. Пусть этот день будет наполнен добрыми пожеланиями, искренними улыбками и самыми светлыми мыслями.</p>
+    <p><strong>Дата:</strong> [ВСТАВЬТЕ ДАТУ]<br>
+       <strong>Место:</strong> [ВСТАВЬТЕ МЕСТО]<br>
+       Будем рады видеть вас рядом!</p>
+  </section>
+
+  <script>
+    const track = document.getElementById('track');
+    const photos = Array.from(track.children);
+    let currentIndex = 0;
+
+    function move(direction) {
+      const total = photos.length;
+      currentIndex = (currentIndex + direction + total) % total;
+      const offset = -currentIndex * 100; // проценты
+      track.style.transform = `translateX(${offset}%)`;
+    }
+
+    // Свайп для мобильных
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      if (touchEndX < touchStartX - 50) move(1);       // свайп влево → следующее фото
+      if (touchEndX > touchStartX + 50) move(-1);     // свайп вправо → предыдущее фото
+    }
+  </script>
+</body>
+</html>
