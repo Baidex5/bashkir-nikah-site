@@ -29,7 +29,7 @@
       padding: 20px;
     }
 
-    /* Фон с «золотым светом»: градиент и псевдоэлемент */
+    /* Фон с «золотым светом» */
     .hero {
       position: relative;
       padding: 60px 20px;
@@ -104,6 +104,28 @@
     .cd-label {
       font-size: 0.85rem;
       color: var(--text-gray);
+    }
+
+    /* Блок с фото */
+    .photo-block {
+      margin-bottom: 30px;
+    }
+    .photo-wrapper {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+      border: 1px solid var(--border-gold);
+    }
+    .photo-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    /* Лёгкая анимация при наведении */
+    .photo-wrapper:hover img {
+      transform: scale(1.03);
     }
 
     /* Блоки информации */
@@ -224,6 +246,14 @@
           <div class="cd-item"><span class="cd-num" id="minutes">00</span><span class="cd-label">минут</span></div>
           <div class="cd-item"><span class="cd-num" id="seconds">00</span><span class="cd-label">секунд</span></div>
         </div>
+      </div>
+    </section>
+
+    <!-- Блок с фото перед «Когда и где» -->
+    <section class="photo-block">
+      <div class="photo-wrapper">
+        <!-- ЗАМЕНИ src НА СВОЁ ФОТО: images/твоё-фото.jpg -->
+        <img src="photo1.jpg" alt="Фото с подготовки к никаху" />
       </div>
     </section>
 
