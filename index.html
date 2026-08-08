@@ -3,198 +3,347 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Приглашение на никах</title>
+  <title>Приглашение на никах Файзяна и Гульдар</title>
   <style>
     :root {
-      --bg-color: #f5f0e6; /* тёплый светлый фон */
-      --accent-color: #a88b6e; /* «башкирский» акцент: тёплый коричневый/бежевый */
-      --text-color: #333;
-      --white: #ffffff;
+      --bg-light: #f9f8f5;
+      --gold-soft: #f5e6c7;
+      --text-dark: #2b2b2b;
+      --text-gray: #555;
+      --accent-gold: #d4a373;
+      --border-gold: rgba(212, 163, 115, 0.3);
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* Главный экран */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
-      background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('images/bg-pattern.jpg') no-repeat center/cover;
-    }
-
-    .hero h1 {
-      font-size: 2rem;
-      margin: 0 0 10px 0;
-      color: var(--accent-color);
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      max-width: 500px;
-    }
-
-    .btn {
-      margin-top: 30px;
-      padding: 12px 24px;
-      background: var(--accent-color);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      border-radius: 6px;
-    }
-    .btn:hover { background: #8c7358; }
-
-    /* Галерея с движением фото */
-    .gallery-container {
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .photo-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      height: 400px; /* фиксированная высота для плавности */
-      margin: 0 auto;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      background: #eee;
-    }
-
-    .photos-track {
-      display: flex;
-      width: max-content;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .photo-item {
-      min-width: 100%; /* на мобильных — по одному фото на экран */
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Кнопки навигации */
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 16px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .nav-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: none;
-      background: var(--white);
-      color: var(--accent-color);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .nav-btn:hover { background: var(--accent-color); color: white; }
-
-    /* Текст приглашения */
-    .invitation-text {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 20px;
+      font-family: 'Georgia', serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
       line-height: 1.6;
     }
 
-    .invitation-text h2 {
-      color: var(--accent-color);
-      text-align: center;
-      margin-bottom: 20px;
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
-    /* Адаптив */
+    /* Фон с «золотым светом»: градиент и псевдоэлемент */
+    .hero {
+      position: relative;
+      padding: 60px 20px;
+      text-align: center;
+      min-height: 500px;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(245, 230, 199, 0.6) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+    .nikah-big {
+      font-size: 3rem;
+      font-weight: normal;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      display: block;
+      margin: 25px 0 30px;
+    }
+    .names {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+    .date-time {
+      font-size: 1.1rem;
+      color: var(--text-gray);
+      margin-bottom: 40px;
+    }
+    .blessing {
+      font-style: italic;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      border-left: 4px solid var(--accent-gold);
+      padding-left: 20px;
+    }
+
+    /* Таймер */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+    .cd-item {
+      background: #fff;
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .cd-num {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+    .cd-label {
+      font-size: 0.85rem;
+      color: var(--text-gray);
+    }
+
+    /* Блоки информации */
+    .info-block {
+      border: 1px solid var(--border-gold);
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    }
+    .section-title {
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      color: var(--text-dark);
+      border-bottom: 2px solid var(--accent-gold);
+      display: inline-block;
+      padding-bottom: 6px;
+    }
+    .program-list li {
+      list-style: none;
+      margin-bottom: 10px;
+      padding-left: 16px;
+      position: relative;
+    }
+    .program-list li::before {
+      content: "•";
+      color: var(--accent-gold);
+      position: absolute;
+      left: 0;
+    }
+
+    /* Форма вопросов */
+    .questions-section {
+      margin-top: 20px;
+    }
+    .question-row {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+    textarea {
+      resize: vertical;
+      height: 80px;
+    }
+    button.submit-btn {
+      background: var(--text-dark);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      width: 100%;
+    }
+    button.submit-btn:hover {
+      background: #1a1a1a;
+    }
+
+    /* Подвал */
+    footer {
+      background: #000;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .footer-names {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.8rem;
+      font-weight: normal;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .footer-message {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    .footer-credit {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
     @media (max-width: 600px) {
-      .hero h1 { font-size: 1.6rem; }
-      .photo-wrapper { height: 320px; }
+      h1 { font-size: 1.7rem; }
+      .nikah-big { font-size: 2.4rem; }
+      .names { font-size: 1.3rem; }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Приглашение на никах</h1>
+        <span class="nikah-big">никах</span>
+        <div class="names">Файзян и Гульдар</div>
+        <div class="date-time">14.08.2026, 11:30</div>
 
-  <!-- Главный экран -->
-  <section class="hero">
-    <h1>Приглашаем на никах!</h1>
-    <p>По башкирской традиции — с теплом, уважением и добрыми пожеланиями.</p>
-    <button class="btn" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">Смотреть фото</button>
-  </section>
+        <p class="blessing">
+          С именем Аллаха мы создаём семью и будем рады видеть вас рядом в этот день.
+        </p>
 
-  <!-- Галерея с возможностью двигать фото -->
-  <section id="gallery" class="gallery-container">
-    <div class="photo-wrapper">
-      <div class="photos-track" id="track">
-        <img src="images/nikah_photo.jpg" alt="Фото 1" class="photo-item">
-        <img src="images/nikah_photo.jpg" alt="Фото 2" class="photo-item">
-        <img src="images/nikah_photo.jpg" alt="Фото 3" class="photo-item">
+        <!-- Таймер -->
+        <div class="countdown" id="countdown">
+          <div class="cd-item"><span class="cd-num" id="days">00</span><span class="cd-label">дней</span></div>
+          <div class="cd-item"><span class="cd-num" id="hours">00</span><span class="cd-label">часов</span></div>
+          <div class="cd-item"><span class="cd-num" id="minutes">00</span><span class="cd-label">минут</span></div>
+          <div class="cd-item"><span class="cd-num" id="seconds">00</span><span class="cd-label">секунд</span></div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="nav-buttons">
-      <button class="nav-btn" id="prevBtn" onclick="move(-1)">←</button>
-      <button class="nav-btn" id="nextBtn" onclick="move(1)">→</button>
-    </div>
-  </section>
+    <section class="info-block">
+      <h2 class="section-title">Когда и где</h2>
+      <p>Мечеть: <strong>адрес будет добавлен позже</strong></p>
+    </section>
 
-  <!-- Текст приглашения -->
-  <section class="invitation-text">
-    <h2>Дорогие гости!</h2>
-    <p>Приглашаем вас разделить с нами радость этого светлого дня — дня никаха. По башкирской традиции мы хотим окружить этот момент теплом, уважением к старшим и единением семьи. Пусть этот день будет наполнен добрыми пожеланиями, искренними улыбками и самыми светлыми мыслями.</p>
-    <p><strong>Дата:</strong> [ВСТАВЬТЕ ДАТУ]<br>
-       <strong>Место:</strong> [ВСТАВЬТЕ МЕСТО]<br>
-       Будем рады видеть вас рядом!</p>
-  </section>
+    <section class="info-block">
+      <h2 class="section-title">Программа дня</h2>
+      <ul class="program-list">
+        <li>11:30 — Сбор гостей</li>
+        <li>12:00 — Обряд никах</li>
+        <li>13:00 — Поздравления</li>
+        <li>14:00 — Праздничное угощение</li>
+      </ul>
+    </section>
+
+    <section class="info-block">
+      <h2 class="section-title">Дресс-код</h2>
+      <p>Будем благодарны за скромный и элегантный образ в светлых и спокойных тонах.</p>
+      <p style="margin-top:10px;">Ваше присутствие и добрые молитвы — лучший для нас подарок.</p>
+    </section>
+
+    <!-- Вопросы -->
+    <section class="info-block questions-section">
+      <h2 class="section-title">Ответьте на несколько вопросов</h2>
+      <form id="tg-form">
+        <div class="question-row">
+          <label for="guest_name">Ваше имя</label>
+          <input type="text" id="guest_name" name="guest_name" required placeholder="Как к вам обращаться?" />
+        </div>
+        <div class="question-row">
+          <label for="will_attend">Придёте ли вы?</label>
+          <select id="will_attend" name="will_attend">
+            <option value="Да">Да</option>
+            <option value="Нет">Нет</option>
+            <option value="Пока не знаю">Пока не знаю</option>
+          </select>
+        </div>
+        <div class="question-row">
+          <label for="message">Ваше пожелание (по желанию)</label>
+          <textarea id="message" name="message" placeholder="Пара тёплых слов..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Отправить в Telegram</button>
+      </form>
+      <p id="status" style="margin-top:12px; font-size:0.9rem;"></p>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-names">Файзян и Гульдар</div>
+    <div class="footer-message">Будем счастливы видеть вас в этот день</div>
+    <div class="footer-credit">BaiDex5 2026 — сайт создан на HTML + CSS + JS</div>
+  </footer>
 
   <script>
-    const track = document.getElementById('track');
-    const photos = Array.from(track.children);
-    let currentIndex = 0;
+    // Таймер обратного отсчёта
+    const targetDate = new Date('2026-08-14T12:00:00');
 
-    function move(direction) {
-      const total = photos.length;
-      currentIndex = (currentIndex + direction + total) % total;
-      const offset = -currentIndex * 100; // проценты
-      track.style.transform = `translateX(${offset}%)`;
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = '<p style="font-size:1.2rem;">Событие началось!</p>';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
     }
 
-    // Свайп для мобильных
-    let touchStartX = 0;
-    let touchEndX = 0;
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-    document.addEventListener('touchstart', e => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
+    // Отправка в Telegram
+    // ВСТАВИТЬ СЮДА: ваш токен и chat_id
+    const TG_TOKEN = '8882108158:AAFACeIjw1rhkqnINu3MWdNwlBWtsBJGfbo';
+    const TG_CHAT_ID = '-5319835197';
 
-    document.addEventListener('touchend', e => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
+    document.getElementById('tg-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('status');
+      status.textContent = 'Отправляем…';
+      status.style.color = '#555';
 
-    function handleSwipe() {
-      if (touchEndX < touchStartX - 50) move(1);       // свайп влево → следующее фото
-      if (touchEndX > touchStartX + 50) move(-1);     // свайп вправо → предыдущее фото
-    }
+      const formData = new FormData(e.target);
+      const payload = {
+        chat_id: TG_CHAT_ID,
+        text: `📩 Новое подтверждение:\n\nИмя: ${formData.get('guest_name')}\nПридёт: ${formData.get('will_attend')}\nПожелание: ${formData.get('message') || 'Нет сообщения'}`
+      };
+
+      try {
+        const url = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`;
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          status.textContent = 'Спасибо! Ответ отправлен.';
+          status.style.color = 'green';
+          e.target.reset();
+        } else {
+          status.textContent = 'Ошибка отправки. Попробуйте позже.';
+          status.style.color = 'red';
+        }
+      } catch (err) {
+        status.textContent = 'Ошибка сети.';
+        status.style.color = 'red';
+      }
+    });
   </script>
 </body>
 </html>
